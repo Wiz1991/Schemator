@@ -1,36 +1,497 @@
+@import url('./components.css');
+
 :root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+    --max-width: 1100px;
+    --border-radius: 12px;
+    --font-mono: Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono',
+        'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono',
+        'Droid Sans Mono', 'Courier New', monospace;
 
+    --color-blue-50: #f0f7ff;
+    --color-blue-100: #c2e0ff;
+    --color-blue-200: #80bfff;
+    --color-blue-300: #66b2ff;
+    --color-blue-400: #3399ff;
+    --color-blue-500: #007fff;
+    --color-blue-600: #0072e5;
+    --color-blue-700: #0059b2;
+    --color-blue-800: #004c99;
+    --color-blue-900: #003a75;
 
-  
+    --color-gray-50: #f6f8fa;
+    --color-gray-100: #eaeef2;
+    --color-gray-200: #d0d7de;
+    --color-gray-300: #afb8c1;
+    --color-gray-400: #8c959f;
+    --color-gray-500: #6e7781;
+    --color-gray-600: #57606a;
+    --color-gray-700: #424a53;
+    --color-gray-800: #32383f;
+    --color-gray-900: #24292f;
+
+    --rounded-sm: 0.25rem;
+    --rounded-md: 0.375rem;
+    --rounded-lg: 0.5rem;
+    --rounded-xl: 1rem;
+    --rounded-full: 99999px;
+
+    /*Font size*/
+    --font-xxs: 0.6rem;
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-base: 1rem;
+    --font-lg: 1.125rem;
+    --font-xl: 1.25rem;
+    --font-2xl: 1.5rem;
+    --font-3xl: 1.875rem;
+    --font-4xl: 2.25rem;
+    --font-5xl: 3rem;
+    --font-6xl: 3.85rem;
+    --font-7xl: 4.5rem;
+    --font-8xl: 5.25rem;
+    --font-9xl: 6rem;
+
+    /*Font weight*/
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+
+    --size-full: 100%;
+    --size-border: 0.1rem;
+
+    --size-0: 0.125rem;
+    --size-1: 0.25rem;
+    --size-2: 0.5rem;
+    --size-3: 0.75rem;
+    --size-4: 1rem;
+    --size-5: 1.25rem;
+    --size-6: 1.5rem;
+    --size-7: 1.75rem;
+    --size-8: 2rem;
+    --size-19: 2.25rem;
+    --size-10: 2.5rem;
+    --size-11: 2.75rem;
+    --size-12: 3rem;
+    --size-14: 3.5rem;
+    --size-16: 4rem;
+    --size-20: 5rem;
+    --size-24: 6rem;
+    --size-32: 8rem;
+    --size-40: 10rem;
+    --size-48: 12rem;
+    --size-52: 13rem;
+    --size-56: 14rem;
+    --size-60: 15rem;
+    --size-64: 16rem;
+    --size-68: 17rem;
+    --size-72: 18rem;
+    --size-76: 19rem;
+    --size-80: 20rem;
+    --size-84: 21rem;
+    --size-88: 22rem;
+    --size-92: 23rem;
+    --size-96: 24rem;
+    --size-100: 25rem;
+    --size-110: 28rem;
+    --size-120: 30rem;
+    --size-160: 40rem;
+
+    /* Container size */
+    --container-xs: 480px;
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
 }
 
-
-
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-mono);
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+    max-width: 100vw;
+    height: 100vh;
+    background-color: var(--color-gray-900);
+    color: #fff;
+    overflow-x: hidden;
 }
 
-
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    html {
+        color-scheme: dark;
+    }
+}
+
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+    box-sizing: border-box; /* 1 */
+    border-width: 0; /* 2 */
+    border-style: solid; /* 2 */
+}
+
+::before,
+::after {
+    --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+html {
+    line-height: 1.5; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -moz-tab-size: 4; /* 3 */
+    tab-size: 4; /* 3 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+    margin: 0; /* 1 */
+    line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+    height: 0; /* 1 */
+    color: inherit; /* 2 */
+    border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+    text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+    font-size: 1em; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+    font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+    text-indent: 0; /* 1 */
+    border-color: inherit; /* 2 */
+    border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    color: inherit; /* 1 */
+    margin: 0; /* 2 */
+    padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+    text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button {
+    -webkit-appearance: button; /* 1 */
+    appearance: button;
+    background-color: transparent; /* 2 */
+    background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+    outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+    box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+    vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+    height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+    -webkit-appearance: textfield; /* 1 */
+    appearance: textfield;
+    outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button; /* 1 */
+    appearance: button;
+    font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+    display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+    margin: 0;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+}
+
+legend {
+    padding: 0;
+}
+
+ol,
+ul,
+menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+    resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::placeholder,
+textarea::placeholder {
+    opacity: 1; /* 1 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role='button'] {
+    cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+    cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+    display: block; /* 1 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+:focus {
+    outline: none;
 }

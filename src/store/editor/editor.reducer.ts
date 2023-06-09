@@ -7,7 +7,7 @@ import {
     AddSection,
 } from '@/store/editor/editor.actions';
 import { findContent } from '@/store/editor/finders';
-import { Group } from '@/lib/models/layout.model';
+import { Group, LayoutType } from '@/lib/models/layout.model';
 import { group } from 'console';
 
 export interface EditorState {
@@ -15,7 +15,22 @@ export interface EditorState {
 }
 
 const initialState: EditorState = {
-    draft: null,
+    draft: {
+        template: {
+            sections: [
+                {
+                    name: 'Test 1',
+                    content: [],
+                },
+                {
+                    name: 'Test 2',
+                    content: [],
+                },
+            ],
+        },
+        properties: {},
+        type: 'Test',
+    },
 };
 
 export const counterSlice = createSlice({
