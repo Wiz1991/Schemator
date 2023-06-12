@@ -1,0 +1,26 @@
+.property-box {
+    padding: var(--size-4) var(--size-6);
+    background-color: var(--color-gray-400);
+    border-radius: var(--rounded-md);
+}
+
+.group-box {
+    padding: var(--size-4) var(--size-6);
+    border: 2px solid var(--color-gray-400);
+    border-radius: var(--rounded-md);
+    display: grid;
+    place-content: center;
+    place-items: center;
+}
+
+.group {
+    display: flex;
+}
+
+.group--row {
+    flex-direction: row;
+}
+
+.group--column {
+    flex-direction: column;
+}

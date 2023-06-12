@@ -1,0 +1,6 @@
+.layout-columns {
+    display: grid;
+    gap: var(--size-2);
+    padding: var(--size-4);
+    grid-template-columns: auto auto;
+}

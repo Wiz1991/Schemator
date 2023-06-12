@@ -17,16 +17,7 @@ export interface EditorState {
 const initialState: EditorState = {
     draft: {
         template: {
-            sections: [
-                {
-                    name: 'Test 1',
-                    content: [],
-                },
-                {
-                    name: 'Test 2',
-                    content: [],
-                },
-            ],
+            sections: [],
         },
         properties: {},
         type: 'Test',
@@ -87,6 +78,7 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = counterSlice.actions;
+export const { addContent, addContentToSection, addProperty, addSection } =
+    counterSlice.actions;
 
 export default counterSlice.reducer;

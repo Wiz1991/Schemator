@@ -9,3 +9,11 @@ export const selectSections = createSelector(selectEditor, (state) => {
     }
     return state.draft.template.sections;
 });
+
+export const selectSectionByIndex = (state: RootState, index: number) => {
+    const { editor } = state;
+    if (!editor.draft) {
+        throw new Error('No draft available. ');
+    }
+    return editor.draft.template.sections[index];
+};

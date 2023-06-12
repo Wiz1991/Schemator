@@ -5,7 +5,7 @@ const Backdrop = React.forwardRef<
     HTMLDivElement,
     { open?: boolean; className: string }
 >((props, ref) => {
-    const { open, className, children, ...other } = props;
+    const { open, className, ...other } = props;
 
     return (
         <div

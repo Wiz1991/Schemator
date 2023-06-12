@@ -1,0 +1,10 @@
+.section-container {
+    padding: var(--size-1) var(--size-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.add-group-btn {
+    width: 100%;
+}

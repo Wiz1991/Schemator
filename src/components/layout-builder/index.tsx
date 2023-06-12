@@ -1,6 +1,6 @@
 'use client';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import { selectSections } from '@/store/editor/edito.selectors';
 import { FaPlusSquare } from 'react-icons/fa';
@@ -24,9 +24,11 @@ import { SectionBuilder } from '@/components/section-builder';
 import classNames from 'classnames';
 import { Backdrop } from '@/components/backdrop';
 import { CreateSection } from '@/components/forms/create-section';
+import { addSection } from '@/store/editor/editor.reducer';
 export function LayoutBuilder() {
     const [activeSection, setActiveSection] = useState(0);
     const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const sections = useSelector(selectSections);
 
@@ -118,7 +120,20 @@ export function LayoutBuilder() {
                 open={open}
                 onClose={() => setOpen(false)}
             >
-                <CreateSection cancel={() => setOpen(false)} />
+                <CreateSection
+                    save={(data) => {
+                        dispatch(
+                            addSection({
+                                section: {
+                                    ...data,
+                                    content: [],
+                                },
+                            })
+                        );
+                        setOpen(false);
+                    }}
+                    cancel={() => setOpen(false)}
+                />
             </Modal>
         </>
     );
