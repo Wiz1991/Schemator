@@ -43,8 +43,9 @@ export function SectionBuilder({ sectionIndex }: SectionProps) {
                 Add Group
             </Button>
             <LayoutTemplate section={section}>
-                {section.content.map((content) => (
+                {section.content.map((content, index) => (
                     <ContentBuilder
+                        groupPath={[index]}
                         content={content}
                         activeSection={sectionIndex}
                     />

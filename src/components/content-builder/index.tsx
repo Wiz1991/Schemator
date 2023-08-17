@@ -11,11 +11,13 @@ import { Button } from '@mui/material';
 interface ContentBuilderProps {
     content: Content;
     activeSection: number;
+    groupPath: number[];
 }
 
 export function ContentBuilder({
     content,
     activeSection,
+    groupPath,
 }: ContentBuilderProps) {
     return (
         <section>
@@ -26,7 +28,11 @@ export function ContentBuilder({
                 />
             )}
             {content.type === ContentType.Group && (
-                <GroupRenderer group={content} activeSection={activeSection} />
+                <GroupRenderer
+                    group={content}
+                    activeSection={activeSection}
+                    groupPath={groupPath}
+                />
             )}
         </section>
     );
@@ -44,9 +50,11 @@ function PropertyRenderer({
 function GroupRenderer({
     group,
     activeSection,
+    groupPath,
 }: {
     group: Group;
     activeSection: number;
+    groupPath: number[];
 }) {
     return (
         <div className={styles['group-box']}>
@@ -65,8 +73,9 @@ function GroupRenderer({
                     marginBottom: `${group.spacer}rem`,
                 }}
             >
-                {group.content.map((content) => (
+                {group.content.map((content, index) => (
                     <ContentBuilder
+                        groupPath={[...groupPath, index]}
                         content={content}
                         activeSection={activeSection}
                     />
