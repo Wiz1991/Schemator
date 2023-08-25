@@ -1,5 +1,3 @@
-'use client';
-
 import { store } from '@/store/store';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { ReactNode } from 'react';
