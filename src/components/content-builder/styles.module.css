@@ -1,16 +1,22 @@
 .property-box {
-    padding: var(--size-4) var(--size-6);
-    background-color: var(--color-gray-400);
+    padding: var(--size-4);
+    border: 2px dotted var(--color-gray-400);
     border-radius: var(--rounded-md);
+}
+.group-renderer {
+    text-align: left;
+}
+.group-renderer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .group-box {
-    padding: var(--size-4) var(--size-6);
+    padding: 5px;       
     border: 2px solid var(--color-gray-400);
     border-radius: var(--rounded-md);
     display: grid;
-    place-content: center;
-    place-items: center;
 }
 
 .group {

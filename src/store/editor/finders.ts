@@ -1,15 +1,13 @@
-import { Content, ContentType } from '@/lib/models/layout.model';
+import { Content, ContentType, Group } from '@/lib/models/layout.model';
 
 export function findContent<T extends Content>(
     content: Content[],
-    name: string
+    groupPath: number[]
 ): T | null {
-    content.forEach((c) => {
-        if (c.type == ContentType.Group) {
-            if (c.name == name) return c;
-            return findContent(c.content, name);
-        }
-    });
+    const [current, ...rest] = groupPath;
 
-    return null;
+    if (rest.length > 0)
+        return findContent((content[current] as Group).content, rest);
+
+    return content[current] as T;
 }

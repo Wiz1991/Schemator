@@ -7,7 +7,7 @@ import {
     FormProvider,
     useWatch,
 } from 'react-hook-form';
-import { Content } from '@/lib/models/layout.model';
+import { Content, ContentType } from '@/lib/models/layout.model';
 import {
     Button,
     FormControl,
@@ -17,27 +17,54 @@ import {
     TextField,
 } from '@mui/material';
 import { CreateGroup } from '@/components/forms/create-group';
+import { CreatePropertyRef } from '@/components/forms/create-property-ref';
+import { addContent } from '@/store/editor/editor.reducer';
 
 interface CreateContentProps {
     activeSection: number;
     groupPath?: number[];
+    close: () => void;
 }
 
 export function CreateContent({
     activeSection,
     groupPath,
+    close,
 }: CreateContentProps) {
     const dispatch = useDispatch<AppDispatch>();
-    const methods = useForm();
+    const methods = useForm({
+        shouldUnregister: true,
+    });
 
-    const type = useWatch({ control: methods.control, name: 'type' });
+    const type = useWatch({
+        control: methods.control,
+        name: 'type',
+        defaultValue: ContentType.Property,
+    });
     const {
         fields: splits,
         append,
         insert,
     } = useFieldArray({ name: 'splitRatio', control: methods.control });
 
-    const onSubmit = (content: any) => {};
+    const onSubmit = (content: any) => {
+        const payload = {
+            ...content,
+            ...(content.type === ContentType.Group
+                ? { content: [] }
+                : undefined),
+        };
+
+        dispatch(
+            addContent({
+                sectionIndex: activeSection,
+                groupPath,
+                content: payload,
+            })
+        );
+
+        close();
+    };
 
     return (
         <FormProvider {...methods}>
@@ -60,9 +87,12 @@ export function CreateContent({
                                 {splits.map((_, i) => {
                                     return (
                                         <TextField
+                                            key={`split-ratio-${i}`}
                                             size="small"
                                             type="number"
-                                            {...methods.register('spacer')}
+                                            {...methods.register(
+                                                `splitRatio.${i}`
+                                            )}
                                             label={`#${i}`}
                                         />
                                     );
@@ -76,46 +106,57 @@ export function CreateContent({
                                 Add Ratio
                             </Button>
                         </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: 'var(--size-4)',
-                            }}
-                        >
-                            <FormControl fullWidth>
-                                <TextField
-                                    size="small"
-                                    {...methods.register('spacer')}
-                                    label="Spacing"
-                                    type="number"
-                                />
-                            </FormControl>
-                            <FormControl fullWidth>
-                                <InputLabel id="type-select">
-                                    Content Type
-                                </InputLabel>
-                                <Select
-                                    {...methods.register('type')}
-                                    labelId="type-select"
-                                    label="Content Type"
-                                    defaultValue={'ref'}
-                                    size="small"
-                                >
-                                    <MenuItem value="group">Group</MenuItem>
-                                    <MenuItem value="ref">
-                                        Property Ref
-                                    </MenuItem>
-                                    <MenuItem value="arrayRef">
-                                        Array Property Ref
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
+                        <div>
+                            <h2>Basic</h2>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 'var(--size-4)',
+                                }}
+                            >
+                                <FormControl fullWidth>
+                                    <TextField
+                                        size="small"
+                                        {...methods.register('spacer')}
+                                        label="Spacing"
+                                        type="number"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth>
+                                    <InputLabel id="type-select">
+                                        Content Type
+                                    </InputLabel>
+                                    <Select
+                                        {...methods.register('type')}
+                                        labelId="type-select"
+                                        label="Content Type"
+                                        defaultValue={ContentType.Property}
+                                        size="small"
+                                    >
+                                        <MenuItem value={ContentType.Group}>
+                                            Group
+                                        </MenuItem>
+                                        <MenuItem value={ContentType.Property}>
+                                            Property Ref
+                                        </MenuItem>
+                                        <MenuItem value={ContentType.ArrayRef}>
+                                            Array Property Ref
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </div>
                     </div>
 
-                    {type == 'group' ? <CreateGroup /> : null}
+                    {type === ContentType.Group ? <CreateGroup /> : null}
+                    {type === ContentType.Property ? (
+                        <CreatePropertyRef />
+                    ) : null}
                 </div>
+                <Button type="submit" fullWidth variant="contained">
+                    Add
+                </Button>
             </form>
         </FormProvider>
     );

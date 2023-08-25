@@ -73,8 +73,6 @@ export function CreateGroup() {
                 </div>
             </div>
 
-
-
             <div className={styles['labels-container']}>
                 <h2> Label Options</h2>
                 <div className={styles['create-group__label']}>
@@ -97,7 +95,7 @@ export function CreateGroup() {
                             defaultValue={'left'}
                         >
                             {['bottom', 'left', 'right', 'top'].map((pos) => (
-                                <MenuItem value={pos}>
+                                <MenuItem value={pos} key={`label-pos-${pos}`}>
                                     {pos.charAt(0).toUpperCase() + pos.slice(1)}
                                 </MenuItem>
                             ))}
@@ -116,7 +114,7 @@ export function CreateGroup() {
                             defaultValue={'start'}
                         >
                             {['center', 'end', 'start'].map((pos) => (
-                                <MenuItem value={pos}>
+                                <MenuItem value={pos} key={`align - ${pos}`}>
                                     {pos.charAt(0).toUpperCase() + pos.slice(1)}
                                 </MenuItem>
                             ))}

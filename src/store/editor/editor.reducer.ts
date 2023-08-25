@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
 import { Schema } from '@/lib/models/schema.model';
 import {
     AddContent,
@@ -9,6 +9,7 @@ import {
 import { findContent } from '@/store/editor/finders';
 import { Group, LayoutType } from '@/lib/models/layout.model';
 import { group } from 'console';
+import { Palanquin } from 'next/font/google';
 
 export interface EditorState {
     draft: Schema | null;
@@ -55,10 +56,20 @@ export const counterSlice = createSlice({
 
             const section = state.draft.template.sections[payload.sectionIndex];
 
+            console.log(payload.groupPath);
+
+            if (!payload.groupPath) {
+                section.content.push(payload.content);
+                return;
+            }
+
             const content = findContent<Group>(
                 section?.content,
-                payload.groupName
+                payload.groupPath
             );
+
+            console.log(current(content));
+
             if (!content) {
                 throw new Error('Failed to find that content in state');
             }

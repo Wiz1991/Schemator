@@ -60,13 +60,16 @@ export function SectionBuilder({ sectionIndex }: SectionProps) {
                     Add Group
                 </Button>
                 <LayoutTemplate section={section}>
-                    {section.content.map((content, index) => (
-                        <ContentBuilder
-                            content={content}
-                            groupPath={[index]}
-                            activeSection={sectionIndex}
-                        />
-                    ))}
+                    {section.content.map((content, index) => {
+                        console.log(index);
+                        return (
+                            <ContentBuilder
+                                content={content}
+                                groupPath={[index]}
+                                activeSection={sectionIndex}
+                            />
+                        );
+                    })}
                 </LayoutTemplate>
             </section>
             <Modal
@@ -76,7 +79,10 @@ export function SectionBuilder({ sectionIndex }: SectionProps) {
                 open={open}
                 onClose={() => setOpen(false)}
             >
-                <CreateContent activeSection={sectionIndex} />
+                <CreateContent
+                    activeSection={sectionIndex}
+                    close={() => setOpen(false)}
+                />
             </Modal>
         </>
     );

@@ -16,7 +16,7 @@ export interface AddContentToSection {
 }
 export interface AddContent {
     sectionIndex: number;
-    groupName: string;
+    groupPath?: number[];
     content: Content;
 }
 

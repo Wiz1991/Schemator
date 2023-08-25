@@ -56,6 +56,7 @@ export function CreateSection({
             <div className={styles.form}>
                 <FormControl fullWidth>
                     <TextField
+                        autoFocus
                         placeholder="Name"
                         required
                         size="small"
