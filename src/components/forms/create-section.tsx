@@ -11,12 +11,7 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store/store';
-import { addSection } from '@/store/editor/editor.reducer';
-import {
-    ContentType,
-    LayoutSection,
-    LayoutType,
-} from '@/lib/models/layout.model';
+import { LayoutSection, LayoutType } from '@/lib/models/layout.model';
 
 interface CreateSectionForm extends LayoutSection {
     columns: number;
@@ -62,8 +57,9 @@ export function CreateSection({
                 <FormControl fullWidth>
                     <TextField
                         placeholder="Name"
+                        required
                         size="small"
-                        {...register('name')}
+                        {...register('name', { required: true })}
                     />
                 </FormControl>
                 <FormControl fullWidth>

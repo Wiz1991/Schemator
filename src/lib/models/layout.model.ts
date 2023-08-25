@@ -32,7 +32,7 @@ export interface LayoutSection {
   gap?: number;
 }
 
-interface BaseContent {
+export interface BaseContent {
   type: ContentType;
 
   /**

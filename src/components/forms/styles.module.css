@@ -11,7 +11,6 @@
 .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--size-7);
 }
 
@@ -27,4 +26,30 @@
 .form-title {
     font-size: var(--font-xl);
     font-weight: 700;
+}
+
+.create-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--size-4);
+}
+
+.create-group__basic {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.create-group__label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.splits {
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    gap: var(--size-1);
 }
