@@ -12,9 +12,14 @@ import {
     Switch,
     TextField,
 } from '@mui/material';
+import { useEffect } from 'react';
 
 export function CreateGroup() {
-    const { register } = useFormContext<Group>();
+    const { register, setValue } = useFormContext<Group>();
+
+    useEffect(() => {
+        setValue('label.options.display', true);
+    });
 
     const {
         fields: splits,
@@ -30,6 +35,7 @@ export function CreateGroup() {
                     <TextField
                         size="small"
                         {...register('name')}
+                        required
                         label="Group Name"
                     ></TextField>
                     <FormControl>

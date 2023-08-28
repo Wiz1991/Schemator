@@ -57,7 +57,7 @@ export function SectionBuilder({ sectionIndex }: SectionProps) {
                     className={styles['add-group-btn']}
                     onClick={() => setOpen(true)}
                 >
-                    Add Group
+                    Add Content
                 </Button>
                 <LayoutTemplate section={section}>
                     {section.content.map((content, index) => {

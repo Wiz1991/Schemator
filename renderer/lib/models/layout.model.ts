@@ -120,8 +120,6 @@ export enum ContentType {
 
 export enum LayoutType {
     Columns = 'columns',
-    ClcLog = 'clc-log',
-    DefaultLog = 'default-log',
     ReportConfigurator = 'report-configurator',
     DataAcq = 'data-acquisition',
 }

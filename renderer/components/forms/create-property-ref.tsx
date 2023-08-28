@@ -23,6 +23,7 @@ export function CreatePropertyRef() {
             <TextField
                 size="small"
                 autoFocus
+                required
                 {...register('ref')}
                 label="Ref"
             ></TextField>
@@ -43,7 +44,7 @@ export function CreatePropertyRef() {
                     defaultValue={'left'}
                 >
                     {['bottom', 'left', 'right', 'top'].map((pos) => (
-                        <MenuItem value={pos}>
+                        <MenuItem value={pos} key={`label-pos-ref-${pos}`}>
                             {pos.charAt(0).toUpperCase() + pos.slice(1)}
                         </MenuItem>
                     ))}
@@ -60,7 +61,7 @@ export function CreatePropertyRef() {
                     defaultValue={'start'}
                 >
                     {['center', 'end', 'start'].map((pos) => (
-                        <MenuItem value={pos}>
+                        <MenuItem value={pos} key={`label-align-ref-${pos}`}>
                             {pos.charAt(0).toUpperCase() + pos.slice(1)}
                         </MenuItem>
                     ))}

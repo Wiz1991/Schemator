@@ -5,11 +5,10 @@ import {
     AddContentToSection,
     AddProperty,
     AddSection,
+    UpdateContent,
 } from '@/store/editor/editor.actions';
 import { findContent } from '@/store/editor/finders';
-import { Group, LayoutType } from '@/lib/models/layout.model';
-import { group } from 'console';
-import { Palanquin } from 'next/font/google';
+import { Group } from '@/lib/models/layout.model';
 
 export interface EditorState {
     draft: Schema | null;
@@ -56,8 +55,6 @@ export const counterSlice = createSlice({
 
             const section = state.draft.template.sections[payload.sectionIndex];
 
-            console.log(payload.groupPath);
-
             if (!payload.groupPath) {
                 section.content.push(payload.content);
                 return;
@@ -85,11 +82,20 @@ export const counterSlice = createSlice({
             }
             state.draft.properties[propertyKey] = property;
         },
+        updateContent: (state, { payload }: PayloadAction<UpdateContent>) => {
+            const section = state.draft.template.sections[payload.sectionIndex];
+
+            let content = findContent(section.content, payload.groupPath);
+
+            content = { ...content, ...payload.content };
+
+            return state;
+        },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { addContent, addContentToSection, addProperty, addSection } =
+export const { addContent, addContentToSection, addProperty, addSection, updateContent } =
     counterSlice.actions;
 
 export default counterSlice.reducer;

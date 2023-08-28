@@ -88,9 +88,7 @@ function GroupRenderer({
     return (
         <div className={styles['group-renderer']}>
             <div className={styles['group-renderer__header']}>
-                <span>
-                    {group.name} {groupPath}
-                </span>
+                <span>{group.name}</span>
                 <Button onClick={() => setOpen(true)}>Add</Button>
             </div>
             <div className={styles['group-box']}>

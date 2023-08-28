@@ -1,4 +1,5 @@
 import { BrowserWindow, app } from 'electron';
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 
@@ -27,6 +28,8 @@ async function createWindows() {
 
 (async () => {
     await app.whenReady();
+
+    await installExtension(REDUX_DEVTOOLS);
 
     createWindows();
 })();

@@ -24,3 +24,9 @@ export interface AddProperty {
     propertyKey: string;
     property: Property;
 }
+
+export interface UpdateContent {
+    sectionIndex: number;
+    groupPath: number[];
+    content: Content;
+}

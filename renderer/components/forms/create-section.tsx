@@ -8,7 +8,7 @@ import {
     TextField,
 } from '@mui/material';
 import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store/store';
 import { LayoutSection, LayoutType } from '@/lib/models/layout.model';
@@ -29,6 +29,7 @@ export function CreateSection({
         register,
         handleSubmit,
         watch,
+        control,
         formState: { errors },
     } = useForm<CreateSectionForm>({
         defaultValues: {
@@ -40,12 +41,16 @@ export function CreateSection({
         },
     });
 
-    const onSubmit = ({ columns, ...rest }: CreateSectionForm) => {
-        save({
-            ...rest,
-            columnRatio: Array.from({ length: columns }).map((_) => 1),
-        });
+    const onSubmit = (section: CreateSectionForm) => {
+        save(section);
     };
+
+    const {
+        fields: ratios,
+        append,
+        remove,
+        insert,
+    } = useFieldArray<any>({ name: 'columnRatio', control });
 
     return (
         <form
@@ -54,40 +59,76 @@ export function CreateSection({
         >
             <h1 className={styles['form-title']}>Create Section</h1>
             <div className={styles.form}>
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '1rem',
+                    }}
+                >
+                    <FormControl fullWidth>
+                        <TextField
+                            autoFocus
+                            placeholder="Name"
+                            required
+                            size="small"
+                            {...register('name', { required: true })}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id="type-select">Layout Type</InputLabel>
+                        <Select
+                            {...register('type')}
+                            labelId="type-select"
+                            label="Layout Type"
+                            size="small"
+                            defaultValue={LayoutType.Columns}
+                        >
+                            <MenuItem value={LayoutType.Columns}>
+                                Columns
+                            </MenuItem>
+                            <MenuItem value={LayoutType.DataAcq}>
+                                Data Aquisition
+                            </MenuItem>
+                            <MenuItem value={LayoutType.ReportConfigurator}>
+                                Property Sheet
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
                 <FormControl fullWidth>
-                    <TextField
-                        autoFocus
-                        placeholder="Name"
-                        required
-                        size="small"
-                        {...register('name', { required: true })}
-                    />
-                </FormControl>
-                <FormControl fullWidth>
-                    <InputLabel id="type-select">Layout Type</InputLabel>
-                    <Select
-                        {...register('type')}
-                        labelId="type-select"
-                        label="Layout Type"
-                        size="small"
-                        defaultValue={LayoutType.Columns}
-                    >
-                        <MenuItem value={LayoutType.Columns}>Columns</MenuItem>
-                        <MenuItem value={LayoutType.DataAcq}>
-                            Data Aquisition
-                        </MenuItem>
-                        <MenuItem value={LayoutType.ReportConfigurator}>
-                            Report Configurator
-                        </MenuItem>
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                    <TextField
-                        size="small"
-                        {...register('columns')}
-                        label="No. Columns"
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    />
+                    <div className={styles['grouped-inputs']}>
+                        <h2>Column Ratio</h2>
+                        <div className={styles.splits}>
+                            {ratios.map((_, i) => {
+                                return (
+                                    <TextField
+                                        key={`column-s-ratio-${i}`}
+                                        size="small"
+                                        type="number"
+                                        required
+                                        {...register(`columnRatio.${i}`)}
+                                        label={`#${i}`}
+                                    />
+                                );
+                            })}
+                        </div>
+                        <div style={{ display: 'flex' }}>
+                            <Button
+                                fullWidth
+                                style={{ marginTop: 'var(--size-1)' }}
+                                onClick={() => append(1)}
+                            >
+                                Add Ratio
+                            </Button>
+                            <Button
+                                fullWidth
+                                style={{ marginTop: 'var(--size-1)' }}
+                                onClick={() => remove(ratios.length - 1)}
+                            >
+                                Remove Ratio
+                            </Button>
+                        </div>
+                    </div>
                 </FormControl>
             </div>
             <div className={styles['form-action']}>

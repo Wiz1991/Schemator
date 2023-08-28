@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.css';
-import { AppDispatch } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import {
     useFieldArray,
     useForm,
@@ -18,7 +18,8 @@ import {
 } from '@mui/material';
 import { CreateGroup } from '@/components/forms/create-group';
 import { CreatePropertyRef } from '@/components/forms/create-property-ref';
-import { addContent } from '@/store/editor/editor.reducer';
+import { addContent, updateContent } from '@/store/editor/editor.reducer';
+import { selectContentByGroupPath } from '@/store/editor/edito.selectors';
 
 interface CreateContentProps {
     activeSection: number;
@@ -32,8 +33,12 @@ export function CreateContent({
     close,
 }: CreateContentProps) {
     const dispatch = useDispatch<AppDispatch>();
-    const methods = useForm({
+
+    const methods = useForm<Content>({
         shouldUnregister: true,
+        defaultValues: {
+            splitRatio: [1, 1],
+        },
     });
 
     const type = useWatch({
@@ -41,11 +46,13 @@ export function CreateContent({
         name: 'type',
         defaultValue: ContentType.Property,
     });
+
     const {
         fields: splits,
         append,
         insert,
-    } = useFieldArray({ name: 'splitRatio', control: methods.control });
+        remove,
+    } = useFieldArray<any>({ name: 'splitRatio', control: methods.control });
 
     const onSubmit = (content: any) => {
         const payload = {
@@ -90,6 +97,7 @@ export function CreateContent({
                                             key={`split-ratio-${i}`}
                                             size="small"
                                             type="number"
+                                            required
                                             {...methods.register(
                                                 `splitRatio.${i}`
                                             )}
@@ -98,13 +106,22 @@ export function CreateContent({
                                     );
                                 })}
                             </div>
-                            <Button
-                                fullWidth
-                                style={{ marginTop: 'var(--size-1)' }}
-                                onClick={() => append(1)}
-                            >
-                                Add Ratio
-                            </Button>
+                            <div style={{ display: 'flex' }}>
+                                <Button
+                                    fullWidth
+                                    style={{ marginTop: 'var(--size-1)' }}
+                                    onClick={() => append(1)}
+                                >
+                                    Add Ratio
+                                </Button>
+                                <Button
+                                    fullWidth
+                                    style={{ marginTop: 'var(--size-1)' }}
+                                    onClick={() => remove(splits.length - 1)}
+                                >
+                                    Remove Ratio
+                                </Button>
+                            </div>
                         </div>
                         <div>
                             <h2>Basic</h2>
